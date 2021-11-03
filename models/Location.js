@@ -11,7 +11,7 @@ const locationSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    imageUrl: {
+    localImageUrl: {
       type: String,
       required: true,
     },
