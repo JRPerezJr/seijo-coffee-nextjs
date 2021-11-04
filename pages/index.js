@@ -1,3 +1,4 @@
+import useTrackLocation from '../hooks/use-track-location';
 import Head from 'next/head';
 import Image from 'next/image';
 
@@ -24,7 +25,15 @@ export async function getStaticProps() {
 }
 
 export default function Home(props) {
-  const handleOnBannerBtnClick = () => console.log('Btn Clicked');
+  const { handleTrackLocation, isLocating, latLong, locationErrorMsg } =
+    useTrackLocation();
+
+  console.log({ latLong, locationErrorMsg });
+
+  const handleOnBannerBtnClick = () => {
+    console.log('Btn Clicked');
+    handleTrackLocation();
+  };
 
   return (
     <div className={styles.container}>
@@ -36,6 +45,7 @@ export default function Home(props) {
 
       <main className={styles.main}>
         <Banner
+          isLocating={isLocating}
           buttonText="View nearby stores"
           handleOnClick={handleOnBannerBtnClick}
         />
