@@ -12,11 +12,13 @@ import cls from 'classnames';
 export async function getStaticProps({ params }) {
   const coffeeStores = await fetchCoffeeStores();
 
+  const findCoffeeStoreById = coffeeStores.find((coffeeStore) => {
+    return coffeeStore.slug === params.slug; //dynamic id
+  });
+
   return {
     props: {
-      coffeeStore: coffeeStores.find((coffeeStore) => {
-        return coffeeStore.slug === params.slug; //dynamic id
-      }),
+      coffeeStore: findCoffeeStoreById ? findCoffeeStoreById : {},
     },
   };
 }
