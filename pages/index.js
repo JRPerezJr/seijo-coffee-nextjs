@@ -10,7 +10,7 @@ import Banner from '../components/banner/banner';
 import Card from '../components/card/card';
 
 import styles from '../styles/Home.module.css';
-import { StoreContext } from '../utils/Store';
+import { StoreContext } from '../contexts/coffee-stores/coffee-stores.context';
 
 // called on the server
 export async function getStaticProps() {

@@ -1,5 +1,5 @@
 import '../styles/globals.css';
-import { StoreProvider } from '../utils/Store';
+import { StoreProvider } from '../contexts/coffee-stores/coffee-stores.context';
 
 function MyApp({ Component, pageProps }) {
   return (

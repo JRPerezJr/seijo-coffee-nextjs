@@ -1,9 +1,14 @@
+import { useEffect, useState, useContext } from 'react';
+
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 
 import { fetchCoffeeStores } from '../../lib/coffee-stores';
+
+import { StoreContext } from '../../contexts/coffee-stores/coffee-stores.context';
+import { isEmpty } from '../../utils';
 
 import styles from '../../styles/coffee-store.module.css';
 
@@ -40,8 +45,26 @@ export async function getStaticPaths() {
   };
 }
 
-export default function CoffeeStore({ coffeeStore }) {
+export default function CoffeeStore(initialProps) {
+  const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore);
   const router = useRouter();
+
+  const slug = router.query.slug;
+
+  const {
+    state: { coffeeStores },
+  } = useContext(StoreContext);
+
+  useEffect(() => {
+    if (isEmpty(initialProps.coffeeStore)) {
+      if (coffeeStores.length > 0) {
+        const findCoffeeStoreById = coffeeStores.find((coffeeStore) => {
+          return coffeeStore.slug === slug; //dynamic id
+        });
+        setCoffeeStore(findCoffeeStoreById);
+      }
+    }
+  }, [slug]);
 
   if (router.isFallback) {
     return <div>Loading...</div>;
