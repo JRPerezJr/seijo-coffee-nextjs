@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { StoreContext } from '../utils/Store';
+import { StoreContext } from '../contexts/coffee-stores/coffee-stores.context';
 
 const useTrackLocation = () => {
   const { dispatch } = useContext(StoreContext);
