@@ -21,10 +21,12 @@ const storeReducer = (state, action) => {
   }
 };
 
-export const StoreProvider = ({ children }) => {
+const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(storeReducer, initialState);
   const value = { state, dispatch };
   return (
     <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
   );
 };
+
+export default StoreProvider;
