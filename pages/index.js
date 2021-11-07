@@ -27,7 +27,7 @@ export default function Home(props) {
   const { dispatch, state } = useContext(StoreContext);
 
   const { nearbyCoffeeStores, latLong } = state;
-  // const [nearbyCoffeeStores, setNearbyCoffeeStores] = useState('');
+
   const [coffeeStoresError, setCoffeeStoresError] = useState(null);
 
   const { handleTrackLocation, isLocating, locationErrorMsg } =
@@ -40,7 +40,7 @@ export default function Home(props) {
       try {
         const fetchedCoffeeStores = await fetchCoffeeStores();
         console.log({ fetchedCoffeeStores });
-        // setNearbyCoffeeStores(fetchCoffeeStores);
+
         dispatch({
           type: 'SET_COFFEE_STORES',
           payload: {
