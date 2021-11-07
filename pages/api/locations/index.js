@@ -8,7 +8,7 @@ handler.get(async (req, res) => {
   await db.connect();
   const locations = await Location.find({});
   db.disconnect();
-  res.send(locations);
+  res.status(200).send(locations);
 });
 
 export default handler;

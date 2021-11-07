@@ -11,7 +11,7 @@ handler.get(async (req, res) => {
   await Location.deleteMany();
   await Location.insertMany(data.locations);
   db.disconnect();
-  res.send({ message: 'seeded successfully' });
+  res.status(200).send({ message: 'seeded successfully' });
 });
 
 export default handler;
