@@ -33,8 +33,6 @@ export default function Home(props) {
   const { handleTrackLocation, isLocating, locationErrorMsg } =
     useTrackLocation();
 
-  console.log({ latLong, locationErrorMsg });
-
   useEffect(async () => {
     if (latLong) {
       try {
