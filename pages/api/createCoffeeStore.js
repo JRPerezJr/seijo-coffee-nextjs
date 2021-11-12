@@ -17,6 +17,7 @@ const createCoffeeStore = async (req, res) => {
       prefecture,
       postalCode,
       cc,
+      ratingCount,
       rating,
       country,
     } = req.body;
@@ -45,6 +46,7 @@ const createCoffeeStore = async (req, res) => {
                   postalCode,
                   country,
                   cc,
+                  ratingCount,
                   rating,
                 },
               },

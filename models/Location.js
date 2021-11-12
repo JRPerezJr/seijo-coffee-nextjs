@@ -43,6 +43,10 @@ const locationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    ratingCount: {
+      type: Number,
+      required: true,
+    },
     rating: {
       type: Number,
       required: true,
