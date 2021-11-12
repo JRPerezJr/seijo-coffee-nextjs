@@ -11,6 +11,7 @@ const data = {
       postalCode: '〒157-0066',
       country: 'Japan',
       cc: 'JPN',
+      ratingCount: 0,
       rating: 3.6,
     },
     {
@@ -24,6 +25,7 @@ const data = {
       postalCode: '〒157-0066',
       country: 'Japan',
       cc: 'JPN',
+      ratingCount: 0,
       rating: 3.3,
     },
     {
@@ -37,6 +39,7 @@ const data = {
       postalCode: '〒157-0066',
       country: 'Japan',
       cc: 'JPN',
+      ratingCount: 0,
       rating: 3.6,
     },
     {
@@ -50,6 +53,7 @@ const data = {
       postalCode: '〒157-0066',
       country: 'Japan',
       cc: 'JPN',
+      ratingCount: 0,
       rating: 3.5,
     },
     {
@@ -63,6 +67,7 @@ const data = {
       postalCode: '〒157-0066',
       country: 'Japan',
       cc: 'JPN',
+      ratingCount: 0,
       rating: 5,
     },
     {
@@ -76,6 +81,7 @@ const data = {
       postalCode: '〒157-0066',
       country: 'Japan',
       cc: 'JPN',
+      ratingCount: 0,
       rating: 5,
     },
     {
@@ -89,6 +95,7 @@ const data = {
       postalCode: '〒157-0066',
       country: 'Japan',
       cc: 'JPN',
+      ratingCount: 0,
       rating: 4.3,
     },
   ],
