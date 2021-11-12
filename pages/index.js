@@ -53,7 +53,6 @@ export default function Home(props) {
   }, [latLong]);
 
   const handleOnBannerBtnClick = () => {
-    console.log('Btn Clicked');
     handleTrackLocation();
   };
 
