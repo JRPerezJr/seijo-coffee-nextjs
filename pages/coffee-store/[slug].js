@@ -46,25 +46,79 @@ export async function getStaticPaths() {
 }
 
 export default function CoffeeStore(initialProps) {
-  const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore);
   const router = useRouter();
 
   const slug = router.query.slug;
+
+  const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore);
 
   const {
     state: { coffeeStores },
   } = useContext(StoreContext);
 
+  const handleCreateCoffeeStore = async (coffeeStore) => {
+    try {
+      const {
+        _id,
+        name,
+        slug,
+        localImageUrl,
+        address,
+        city,
+        neighborhood,
+        prefecture,
+        postalCode,
+        country,
+        cc,
+        rating,
+      } = coffeeStore;
+
+      const response = await fetch('/api/createCoffeeStore', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: `${_id}`,
+          name,
+          slug,
+          localImageUrl,
+          address,
+          city,
+          neighborhood,
+          prefecture,
+          postalCode,
+          country,
+          cc,
+          rating,
+        }),
+      });
+
+      const dbCoffeeStore = await response.json();
+      console.log({ dbCoffeeStore });
+    } catch (error) {
+      console.error('Error creating coffee store', error);
+    }
+  };
+
   useEffect(() => {
     if (isEmpty(initialProps.coffeeStore)) {
       if (coffeeStores.length > 0) {
-        const findCoffeeStoreById = coffeeStores.find((coffeeStore) => {
+        const coffeeStoreFromContext = coffeeStores.find((coffeeStore) => {
           return coffeeStore.slug === slug; //dynamic id
         });
-        setCoffeeStore(findCoffeeStoreById);
+
+        if (coffeeStoreFromContext) {
+          console.log('set coffee store');
+          setCoffeeStore(coffeeStoreFromContext);
+          handleCreateCoffeeStore(coffeeStoreFromContext);
+        }
       }
+    } else {
+      // SSG
+      handleCreateCoffeeStore(initialProps.coffeeStore);
     }
-  }, [slug]);
+  }, [slug, initialProps, initialProps.coffeeStore]);
 
   if (router.isFallback) {
     return <div>Loading...</div>;
@@ -81,7 +135,12 @@ export default function CoffeeStore(initialProps) {
     rating,
   } = coffeeStore;
 
-  const handleUpvoteButton = () => console.log('Handled!');
+  const [ratingCount, setRatingCount] = useState(0);
+
+  const handleUpvoteButton = () => {
+    let count = ratingCount + 1;
+    setRatingCount(count);
+  };
 
   return (
     <div className={styles.layout}>
@@ -119,7 +178,9 @@ export default function CoffeeStore(initialProps) {
           </div>
           <div className={styles.iconWrapper}>
             <Image src="/static/icons/star.svg" width="24" height="24" />
-            <p className={styles.text}>{rating}</p>
+            <p className={styles.text}>
+              {rating} out of {ratingCount} reviews
+            </p>
           </div>
           <button className={styles.upvoteButton} onClick={handleUpvoteButton}>
             Up vote!
