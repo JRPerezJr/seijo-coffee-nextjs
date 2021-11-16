@@ -91,7 +91,7 @@ export default function Home(props) {
                     key={coffeeStore._id}
                     className={styles.card}
                     name={coffeeStore.name}
-                    imgUrl={coffeeStore.imgUrl}
+                    localImageUrl={coffeeStore.localImageUrl}
                     href={`/coffee-store/${coffeeStore.slug}`}
                   />
                 );
@@ -110,7 +110,7 @@ export default function Home(props) {
                     key={coffeeStore._id}
                     className={styles.card}
                     name={coffeeStore.name}
-                    imgUrl={coffeeStore.imgUrl}
+                    localImageUrl={coffeeStore.localImageUrl}
                     href={`/coffee-store/${coffeeStore.slug}`}
                   />
                 );

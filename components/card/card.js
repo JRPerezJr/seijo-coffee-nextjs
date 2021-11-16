@@ -5,7 +5,7 @@ import cls from 'classnames';
 
 import styles from './card.module.css';
 
-export default function Card({ name, imgUrl, href }) {
+export default function Card({ name, localImageUrl, href }) {
   return (
     <Link href={href}>
       <a className={styles.cardLink}>
@@ -16,7 +16,7 @@ export default function Card({ name, imgUrl, href }) {
           <div className={styles.cardImageWrapper}>
             <Image
               className={styles.cardImage}
-              src={imgUrl}
+              src={localImageUrl}
               width={260}
               height={160}
             />
