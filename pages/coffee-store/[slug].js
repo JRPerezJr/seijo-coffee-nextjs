@@ -13,6 +13,7 @@ import { isEmpty } from '../../utils';
 import styles from '../../styles/coffee-store.module.css';
 
 import cls from 'classnames';
+import useFetchCoffeeShop from '../../hooks/use-fetch-coffee-shop';
 
 export async function getStaticProps({ params }) {
   const coffeeStores = await fetchCoffeeStores();
@@ -70,6 +71,7 @@ export default function CoffeeStore(initialProps) {
         postalCode,
         country,
         cc,
+        ratingCount,
         rating,
       } = coffeeStore;
 
@@ -90,6 +92,7 @@ export default function CoffeeStore(initialProps) {
           postalCode,
           country,
           cc,
+          ratingCount,
           rating,
         }),
       });
@@ -125,22 +128,40 @@ export default function CoffeeStore(initialProps) {
   }
 
   const {
+    _id,
     address,
     city,
     country,
     prefecture,
     name,
     neighborhood,
-    imgUrl,
+    localImageUrl,
     rating,
   } = coffeeStore;
 
   const [ratingCount, setRatingCount] = useState(0);
 
+  // custom SWR hook
+  const { data, error } = useFetchCoffeeShop(_id);
+
+  useEffect(() => {
+    console.log('Called', data);
+    if (data && data.length > 0) {
+      setCoffeeStore(data[0]);
+      setRatingCount(data[0].ratingCount);
+    }
+  }, [data]);
+
   const handleUpvoteButton = () => {
     let count = ratingCount + 1;
     setRatingCount(count);
   };
+
+  if (error) {
+    return (
+      <div>Something went wrong while retrieving the coffee store page</div>
+    );
+  }
 
   return (
     <div className={styles.layout}>
@@ -159,7 +180,7 @@ export default function CoffeeStore(initialProps) {
           </div>
           <Image
             className={styles.storeImg}
-            src={imgUrl}
+            src={localImageUrl}
             width={600}
             height={360}
             alt={name}
