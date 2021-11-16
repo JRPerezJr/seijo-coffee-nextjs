@@ -15,9 +15,15 @@ async function connect() {
     }
     await mongoose.disconnect();
   }
-  const db = await mongoose.connect(process.env.MONGODB_URI);
-  console.log('new connection established');
-  connection.isConnected = db.connections[0].readyState;
+  if(process.env.NODE_ENV !== 'production'){
+    const dbUri =  process.env.MONGODB_URI
+    const db = await mongoose.connect(dbUri);
+    console.log('new connection established');
+    connection.isConnected = db.connections[0].readyState;
+  }
+  const db = await mongoose.connect(MONGO_ATLAS_URI);
+    console.log('new connection established');
+    connection.isConnected = db.connections[0].readyState;
 }
 
 async function disconnect() {
