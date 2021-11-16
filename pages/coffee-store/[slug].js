@@ -98,7 +98,6 @@ export default function CoffeeStore(initialProps) {
       });
 
       const dbCoffeeStore = await response.json();
-      console.log({ dbCoffeeStore });
     } catch (error) {
       console.error('Error creating coffee store', error);
     }
@@ -112,7 +111,6 @@ export default function CoffeeStore(initialProps) {
         });
 
         if (coffeeStoreFromContext) {
-          console.log('set coffee store');
           setCoffeeStore(coffeeStoreFromContext);
           handleCreateCoffeeStore(coffeeStoreFromContext);
         }
@@ -140,21 +138,40 @@ export default function CoffeeStore(initialProps) {
   } = coffeeStore;
 
   const [ratingCount, setRatingCount] = useState(0);
+  const [id, setId] = useState(0);
 
   // custom SWR hook
   const { data, error } = useFetchCoffeeShop(_id);
 
   useEffect(() => {
-    console.log('Called', data);
     if (data && data.length > 0) {
       setCoffeeStore(data[0]);
       setRatingCount(data[0].ratingCount);
+      setId(data[0].id);
     }
   }, [data]);
 
-  const handleUpvoteButton = () => {
-    let count = ratingCount + 1;
-    setRatingCount(count);
+  const handleUpvoteButton = async () => {
+    try {
+      const response = await fetch('/api/favoriteCoffeeStoreById', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id,
+        }),
+      });
+
+      const dbCoffeeStore = await response.json();
+
+      if (dbCoffeeStore && dbCoffeeStore.length > 0) {
+        let count = ratingCount + 1;
+        setRatingCount(count);
+      }
+    } catch (error) {
+      console.error('Error updating coffee store rating count', error);
+    }
   };
 
   if (error) {
